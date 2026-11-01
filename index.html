@@ -1,0 +1,1362 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PERTANDINGAN MOD MLBB & eFOOTBALL E-SPORTS CHAMPIONSHIP 2026</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts: Orbitron & Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Orbitron:wght@600;800;900&display=swap" rel="stylesheet">
+    
+    <script>
+         tailwind.config = {
+             theme: {
+                extend: {
+                     colors: {
+                         brand: {
+                             cyan: '#00d2ff',   
+                             purple: '#6b11ff', 
+                             pink: '#ff007f',   
+                             dark: '#040711',   
+                             card: '#0a1022',   
+                             border: '#1a294d'
+                        }
+                    },
+                     fontFamily: {
+                         orbitron: ['Orbitron', 'sans-serif'],
+                         inter: ['Inter', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+             font-family: 'Inter', sans-serif;
+             background-color: #02050e; 
+             background-image: 
+                 radial-gradient(circle at 15% 15%, rgba(0, 210, 255, 0.28) 0px, transparent 45%),
+                 radial-gradient(circle at 85% 85%, rgba(255, 0, 127, 0.28) 0px, transparent 45%),
+                 radial-gradient(circle at 50% 30%, rgba(107, 17, 255, 0.20) 0px, transparent 60%);
+             background-attachment: fixed;
+             color: #e2e8f0;
+        }
+        .glass-panel {
+             background: rgba(10, 16, 34, 0.85); 
+             backdrop-filter: blur(16px);
+             -webkit-backdrop-filter: blur(16px);
+             border: 1px solid rgba(0, 210, 255, 0.2); 
+        }
+        .neon-text-cyan {
+            text-shadow: 0 0 10px rgba(0, 242, 254, 0.5);
+        }
+
+        /* BAHAGIAN GAMBAR LATAR BELAKANG UNTUK PERANTI BERBEZA */
+        .fixed-bg-base {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            opacity: 0.15;
+            pointer-events: none;
+            z-index: 0;
+            will-change: transform;
+            transform: translateZ(0);
+            -webkit-transform: translateZ(0);
+        }
+
+        /* 1. Gambar untuk TELEFON */
+        .bg-mobile {
+            background-image: url('https://i.pinimg.com/736x/87/cc/87/87cc87d331191321e85c4283c28ac770.jpg');
+        }
+
+        /* 2. Gambar untuk TABLET */
+        @media (min-width: 640px) {
+            .bg-tablet {
+                background-image: url('https://i.pinimg.com/1200x/72/ed/f0/72edf0f0c51054612f8951d23058b6be.jpg');
+            }
+        }
+
+        /* 3. Gambar untuk LAPTOP / DESKTOP */
+        @media (min-width: 1024px) {
+            .bg-desktop {
+                background-image: url('https://i.pinimg.com/1200x/72/ed/f0/72edf0f0c51054612f8951d23058b6be.jpg');
+            }
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0b0f19;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #2a3859;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #00f2fe;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between pb-10 relative">
+
+    <!-- LAPISAN BACKGROUND IKUT PERANTI -->
+    <div class="fixed-bg-base bg-mobile sm:hidden"></div>
+    <div class="fixed-bg-base bg-tablet hidden sm:block lg:hidden"></div>
+    <div class="fixed-bg-base bg-desktop hidden lg:block"></div>
+
+    <!-- Header Navigation -->
+    <header class="w-full glass-panel border-b border-gray-800 sticky top-0 z-40">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex flex-col sm:flex-row justify-between items-center gap-4">
+            <div class="flex items-center space-x-3 cursor-pointer" onclick="switchRole('select')">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-brand-purple to-brand-cyan flex items-center justify-center font-orbitron font-extrabold text-white text-xl shadow-lg">
+                    E
+                </div>
+                <div>
+                    <h1 class="font-orbitron text-base sm:text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-brand-cyan via-white to-brand-pink">
+                        PERTANDINGAN MOD MLBB & eFOOTBALL
+                    </h1>
+                    <p class="text-[10px] sm:text-xs text-gray-400 font-medium tracking-widest uppercase">E-Sports Championship 2026</p>
+                </div>
+            </div>
+            
+            <!-- Quick View Indicator -->
+            <div id="currentRoleBadge" class="hidden sm:flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-gray-800 text-cyan-400 border border-cyan-500/30">
+                <i class="fa-solid font-bold text-xs mr-2 fa-users"></i>
+                <span id="roleBadgeText">PILIH PERANAN</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 flex-grow w-full relative z-10">
+        
+        <!-- ================= ROLE SELECTION VIEW ================= -->
+        <section id="roleSelectView" class="w-full space-y-8 py-6">
+            <div class="text-center max-w-3xl mx-auto space-y-3">
+                <span class="px-4 py-1.5 rounded-full text-xs font-bold bg-purple-950/80 text-purple-300 border border-purple-700/50 uppercase tracking-widest inline-block">
+                    Portal Rasmi Semakan & Pengurusan Kejohanan
+                </span>
+                <h2 class="font-orbitron text-3xl sm:text-5xl font-extrabold text-white">
+                    SILA PILIH <span class="text-brand-cyan neon-text-cyan">PERANAN ANDA</span>
+                </h2>
+                <p class="text-gray-400 text-sm sm:text-base">
+                    Sila pilih kategori pendaftaran anda atau log masuk sebagai Pentadbir Sistem untuk membuat semakan dan kemaskini maklumat.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 pt-6">
+                <!-- MLBB Card -->
+                <div onclick="switchRole('mlbb')" class="glass-panel rounded-2xl p-6 hover:border-cyan-400/60 transition-all duration-300 cursor-pointer transform hover:-translate-y-2 group relative overflow-hidden">
+                    <div class="absolute -right-6 -bottom-6 w-32 h-32 bg-cyan-500/10 rounded-full blur-2xl group-hover:bg-cyan-500/20 transition-all"></div>
+                    <div class="w-14 h-14 rounded-2xl bg-cyan-950/80 border border-cyan-500/30 text-brand-cyan flex items-center justify-center text-2xl mb-6 group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-gamepad"></i>
+                    </div>
+                    <h3 class="font-orbitron text-xl font-bold text-white mb-2 group-hover:text-brand-cyan transition-colors">PESERTA MLBB</h3>
+                    <p class="text-gray-400 text-sm mb-6 leading-relaxed">
+                        Semakan senarai ahli dan status pendaftaran pasukan Mobile Legends: Bang Bang.
+                    </p>
+                    <div class="flex items-center text-xs font-bold text-brand-cyan uppercase tracking-wider">
+                        <span>Pilih Pasukan</span>
+                        <i class="fa-solid fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform"></i>
+                    </div>
+                </div>
+
+                <!-- eFootball Card -->
+                <div onclick="switchRole('efootball')" class="glass-panel rounded-2xl p-6 hover:border-purple-400/60 transition-all duration-300 cursor-pointer transform hover:-translate-y-2 group relative overflow-hidden">
+                    <div class="absolute -right-6 -bottom-6 w-32 h-32 bg-purple-500/10 rounded-full blur-2xl group-hover:bg-purple-500/20 transition-all"></div>
+                    <div class="w-14 h-14 rounded-2xl bg-purple-950/80 border border-purple-500/30 text-purple-400 flex items-center justify-center text-2xl mb-6 group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-futbol"></i>
+                    </div>
+                    <h3 class="font-orbitron text-xl font-bold text-white mb-2 group-hover:text-purple-300 transition-colors">PESERTA eFOOTBALL</h3>
+                    <p class="text-gray-400 text-sm mb-6 leading-relaxed">
+                        Semakan butiran profil individu dan ID In-Game bagi peserta kejohanan eFootball.
+                    </p>
+                    <div class="flex items-center text-xs font-bold text-purple-400 uppercase tracking-wider">
+                        <span>Semak Profil</span>
+                        <i class="fa-solid fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform"></i>
+                    </div>
+                </div>
+
+                <!-- Admin Card -->
+                <div onclick="switchRole('admin')" class="glass-panel rounded-2xl p-6 hover:border-pink-400/60 transition-all duration-300 cursor-pointer transform hover:-translate-y-2 group relative overflow-hidden">
+                    <div class="absolute -right-6 -bottom-6 w-32 h-32 bg-pink-500/10 rounded-full blur-2xl group-hover:bg-pink-500/20 transition-all"></div>
+                    <div class="w-14 h-14 rounded-2xl bg-pink-950/80 border border-pink-500/30 text-pink-400 flex items-center justify-center text-2xl mb-6 group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-user-shield"></i>
+                    </div>
+                    <h3 class="font-orbitron text-xl font-bold text-white mb-2 group-hover:text-pink-400 transition-colors">PORTAL ADMIN</h3>
+                    <p class="text-gray-400 text-sm mb-6 leading-relaxed">
+                        Akses pentadbir untuk menguruskan, menyunting, dan menambah peserta atau pasukan baharu.
+                    </p>
+                    <div class="flex items-center text-xs font-bold text-pink-400 uppercase tracking-wider">
+                        <span>Log Masuk Admin</span>
+                        <i class="fa-solid fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform"></i>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= MLBB PARTICIPANT VIEW ================= -->
+        <section id="mlbbView" class="hidden space-y-6">
+            <div class="flex items-center justify-between border-b border-gray-800 pb-4">
+                <button onclick="switchRole('select')" class="text-xs font-bold text-gray-400 hover:text-white flex items-center gap-2">
+                    <i class="fa-solid fa-arrow-left"></i> Kembali Ke Utama
+                </button>
+                <h2 class="font-orbitron text-lg font-bold text-brand-cyan"><i class="fa-solid fa-shield-halved mr-2"></i>SEMAKAN PASUKAN MLBB</h2>
+            </div>
+
+            <!-- Verification Card -->
+            <div id="mlbbAuthCard" class="max-w-xl mx-auto glass-panel rounded-2xl p-6 sm:p-8 space-y-6">
+                <div class="text-center space-y-2">
+                    <h3 class="font-orbitron text-2xl font-bold text-white">Log Masuk Ketua Pasukan</h3>
+                    <p class="text-xs text-gray-400">Pilih pasukan anda dan masukkan No. Kad Pengenalan Ketua Pasukan sebagai kata laluan.</p>
+                </div>
+
+                <form id="mlbbAuthForm" onsubmit="handleMlbbLogin(event)" class="space-y-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-300 uppercase mb-2">Nama Pasukan</label>
+                        <select id="mlbbTeamSelect" required class="w-full bg-slate-900/90 border border-slate-700 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-brand-cyan transition-colors">
+                            <option value="" disabled selected>-- Pilih Pasukan Anda --</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-300 uppercase mb-2">No. IC Ketua Pasukan (Password)</label>
+                        <input type="password" id="mlbbIcInput" required placeholder="Contoh: (xxxxxx-xx-xxxx) atau (xxxxxxxxxxxx)" class="w-full bg-slate-900/90 border border-slate-700 rounded-xl px-4 py-3 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-brand-cyan transition-colors">
+                    </div>
+
+                    <div id="mlbbError" class="hidden text-xs text-red-400 bg-red-950/50 border border-red-800 p-3 rounded-xl flex items-center gap-2">
+                        <i class="fa-solid fa-circle-exclamation"></i>
+                        <span>No. IC Ketua Pasukan tidak tepat! Sila cuba lagi.</span>
+                    </div>
+
+                    <button type="submit" class="w-full py-3.5 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-orbitron font-bold text-sm tracking-wider hover:opacity-90 transition-opacity shadow-lg shadow-cyan-500/20">
+                        SAHKAN & LIHAT PASUKAN
+                    </button>
+                </form>
+            </div>
+
+            <!-- Team Members Output Area -->
+            <div id="mlbbTeamDetails" class="hidden space-y-6 pt-4">
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center bg-slate-900/80 p-6 rounded-2xl border border-brand-cyan/30 gap-4">
+                    <div>
+                        <span class="text-xs font-bold uppercase tracking-widest text-brand-cyan">Maklumat Pasukan Disahkan</span>
+                        <h3 id="displayMlbbTeamName" class="font-orbitron text-2xl font-bold text-white"></h3>
+                    </div>
+                    <div class="flex flex-wrap items-center gap-3 w-full sm:w-auto">
+                        <button onclick="openMlbbPhoneEditModal()" class="px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold font-orbitron flex items-center gap-2 shadow-md transition-all">
+                            <i class="fa-solid fa-phone-pen"></i> Kemaskini No. Telefon
+                        </button>
+                        <a id="teamReceiptBtn" href="#" target="_blank" class="px-4 py-2.5 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 text-white text-xs font-bold font-orbitron flex items-center justify-center gap-2 shadow-md hover:opacity-90 transition-opacity">
+                            <i class="fa-solid fa-file-invoice-dollar"></i> Bukti Bayaran Pasukan
+                        </a>
+                        <button onclick="logoutParticipant('mlbb')" class="px-4 py-2.5 rounded-xl bg-slate-800 text-xs font-bold text-gray-300 hover:bg-slate-700 transition-colors">
+                            <i class="fa-solid fa-right-from-bracket mr-1"></i> Keluar
+                        </button>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="mlbbMembersGrid">
+                    <!-- Dynamic Member Cards -->
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= eFOOTBALL PARTICIPANT VIEW ================= -->
+        <section id="efootballView" class="hidden space-y-6">
+            <div class="flex items-center justify-between border-b border-gray-800 pb-4">
+                <button onclick="switchRole('select')" class="text-xs font-bold text-gray-400 hover:text-white flex items-center gap-2">
+                    <i class="fa-solid fa-arrow-left"></i> Kembali Ke Utama
+                </button>
+                <h2 class="font-orbitron text-lg font-bold text-purple-400"><i class="fa-solid fa-futbol mr-2"></i>SEMAKAN PESERTA eFOOTBALL</h2>
+            </div>
+
+            <!-- Verification Card -->
+            <div id="efootballAuthCard" class="max-w-xl mx-auto glass-panel rounded-2xl p-6 sm:p-8 space-y-6">
+                <div class="text-center space-y-2">
+                    <h3 class="font-orbitron text-2xl font-bold text-white">Pengesahan Kad Pengenalan</h3>
+                    <p class="text-xs text-gray-400">Masukkan No. Kad Pengenalan anda sebagai password untuk melihat rekod pendaftaran rasmi eFootball.</p>
+                </div>
+
+                <form id="efootballAuthForm" onsubmit="handleEfootballLogin(event)" class="space-y-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-300 uppercase mb-2">No. IC Peserta (Password)</label>
+                        <input type="password" id="efootballIcInput" required placeholder="Contoh: (xxxxxx-xx-xxxx) atau (xxxxxxxxxxxx)" class="w-full bg-slate-900/90 border border-slate-700 rounded-xl px-4 py-3 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-purple-500 transition-colors">
+                    </div>
+
+                    <div id="efootballError" class="hidden text-xs text-red-400 bg-red-950/50 border border-red-800 p-3 rounded-xl flex items-center gap-2">
+                        <i class="fa-solid fa-circle-exclamation"></i>
+                        <span>No. IC tidak dijumpai dalam senarai pendaftaran eFootball!</span>
+                    </div>
+
+                    <button type="submit" class="w-full py-3.5 rounded-xl bg-gradient-to-r from-purple-600 to-pink-600 text-white font-orbitron font-bold text-sm tracking-wider hover:opacity-90 transition-opacity shadow-lg shadow-purple-500/20">
+                        SEMAK PROFIL PESERTA
+                    </button>
+                </form>
+            </div>
+
+            <!-- Single Player Details Area -->
+            <div id="efootballPlayerDetails" class="hidden max-w-2xl mx-auto space-y-6 pt-4">
+                <div class="glass-panel rounded-2xl p-6 sm:p-8 border border-purple-500/30 relative overflow-hidden">
+                    <div class="flex justify-between items-start mb-6">
+                        <div>
+                            <span class="px-3 py-1 rounded-full text-xs font-bold bg-purple-950 text-purple-300 border border-purple-800">
+                                PESERTA eFOOTBALL
+                            </span>
+                            <h3 id="efPlayerName" class="font-orbitron text-2xl font-bold text-white mt-3"></h3>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <button onclick="openEfPhoneEditModal()" class="px-3 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold flex items-center gap-1.5">
+                                <i class="fa-solid fa-phone-pen"></i> Edit Tel
+                            </button>
+                            <button onclick="logoutParticipant('efootball')" class="text-xs text-gray-400 hover:text-white bg-slate-800 px-3 py-1.5 rounded-lg">
+                                <i class="fa-solid fa-right-from-bracket mr-1"></i> Keluar
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
+                        <div class="bg-slate-900/70 p-4 rounded-xl border border-slate-800">
+                            <span class="text-xs text-gray-400 block mb-1">No. Kad Pengenalan</span>
+                            <span id="efPlayerIc" class="font-mono text-gray-200 font-semibold"></span>
+                        </div>
+                        <div class="bg-slate-900/70 p-4 rounded-xl border border-slate-800">
+                            <span class="text-xs text-gray-400 block mb-1">No. Matriks</span>
+                            <span id="efPlayerMatrik" class="text-gray-200 font-semibold"></span>
+                        </div>
+                        <div class="bg-slate-900/70 p-4 rounded-xl border border-slate-800">
+                            <span class="text-xs text-gray-400 block mb-1">No. Telefon</span>
+                            <span id="efPlayerPhone" class="text-green-400 font-semibold font-mono"></span>
+                        </div>
+                        <div class="bg-slate-900/70 p-4 rounded-xl border border-slate-800">
+                            <span class="text-xs text-gray-400 block mb-1">Alamat E-mel</span>
+                            <span id="efPlayerEmail" class="text-gray-200 break-all font-medium"></span>
+                        </div>
+                        <div class="bg-slate-900/70 p-4 rounded-xl border border-slate-800">
+                            <span class="text-xs text-gray-400 block mb-1">Username In-Game</span>
+                            <span id="efPlayerUsername" class="text-purple-300 font-bold"></span>
+                        </div>
+                        <div class="bg-slate-900/70 p-4 rounded-xl border border-slate-800">
+                            <span class="text-xs text-gray-400 block mb-1">ID In-Game</span>
+                            <span id="efPlayerId" class="font-mono text-gray-200 font-semibold"></span>
+                        </div>
+                        <div class="bg-slate-900/70 p-4 rounded-xl border border-slate-800 sm:col-span-2 flex flex-col justify-center">
+                            <span class="text-xs text-gray-400 block mb-1">Bukti Bayaran</span>
+                            <div id="efPlayerReceipt"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= ADMIN VIEW ================= -->
+        <section id="adminView" class="hidden space-y-6">
+            <div class="flex items-center justify-between border-b border-gray-800 pb-4">
+                <button onclick="switchRole('select')" class="text-xs font-bold text-gray-400 hover:text-white flex items-center gap-2">
+                    <i class="fa-solid fa-arrow-left"></i> Kembali Ke Utama
+                </button>
+                <h2 class="font-orbitron text-lg font-bold text-pink-400"><i class="fa-solid fa-user-shield mr-2"></i>PENTADBIRAN SISTEM</h2>
+            </div>
+
+            <!-- Admin Password Verification -->
+            <div id="adminAuthBox" class="max-w-md mx-auto glass-panel rounded-2xl p-6 sm:p-8 space-y-6">
+                <div class="text-center space-y-2">
+                    <div class="w-12 h-12 rounded-full bg-pink-950/80 text-pink-400 border border-pink-700/50 flex items-center justify-center mx-auto text-xl mb-2">
+                        <i class="fa-solid fa-key"></i>
+                    </div>
+                    <h3 class="font-orbitron text-2xl font-bold text-white">Log Masuk Admin</h3>
+                    <p class="text-xs text-gray-400">Sila masukkan kata laluan pentadbir untuk mengurus data.</p>
+                </div>
+
+                <form onsubmit="handleAdminLogin(event)" class="space-y-4">
+                    <div>
+                        <input type="password" id="adminPasswordInput" required placeholder="Masukkan kata laluan" class="w-full bg-slate-900/90 border border-slate-700 rounded-xl px-4 py-3 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-pink-500 transition-colors">
+                    </div>
+
+                    <div id="adminError" class="hidden text-xs text-red-400 bg-red-950/50 border border-red-800 p-3 rounded-xl flex items-center gap-2">
+                        <i class="fa-solid fa-circle-exclamation"></i>
+                        <span>Kata laluan salah! Sila masukkan kata laluan yang betul.</span>
+                    </div>
+
+                    <button type="submit" class="w-full py-3.5 rounded-xl bg-gradient-to-r from-pink-600 to-rose-600 text-white font-orbitron font-bold text-sm tracking-wider hover:opacity-90 transition-opacity shadow-lg shadow-pink-500/20">
+                        AKSES PANEL ADMIN
+                    </button>
+                </form>
+            </div>
+
+            <!-- Admin Dashboard -->
+            <div id="adminDashboard" class="hidden space-y-6">
+                <!-- Top Control Bar -->
+                <div class="flex flex-col lg:flex-row justify-between items-stretch lg:items-center gap-4 bg-slate-900/90 p-4 sm:p-6 rounded-2xl border border-pink-500/30">
+                    <!-- Tab Switching -->
+                    <div class="flex flex-wrap gap-2">
+                        <button id="adminTabMlbb" onclick="switchAdminCategory('mlbb')" class="px-5 py-2.5 rounded-xl text-xs font-bold font-orbitron bg-cyan-600 text-white shadow-lg transition-all">
+                            <i class="fa-solid fa-users-gear mr-2"></i> MLBB PASUKAN
+                        </button>
+                        <button id="adminTabEf" onclick="switchAdminCategory('efootball')" class="px-5 py-2.5 rounded-xl text-xs font-bold font-orbitron bg-slate-800 text-gray-400 hover:text-white transition-all">
+                            <i class="fa-solid fa-futbol mr-2"></i> eFOOTBALL PESERTA
+                        </button>
+                    </div>
+
+                    <!-- Actions Bar -->
+                    <div class="flex flex-col sm:flex-row gap-3">
+                        <div class="relative flex-grow sm:w-64">
+                            <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-3 text-gray-500 text-xs"></i>
+                            <input type="text" id="adminSearchInput" onkeyup="renderAdminTable()" placeholder="Cari nama, IC, matriks, telefon, pasukan..." class="w-full bg-slate-950 border border-slate-700 rounded-xl pl-9 pr-3 py-2 text-xs text-white focus:outline-none focus:border-pink-500 transition-colors">
+                        </div>
+
+                        <button onclick="openAddModal()" class="px-4 py-2 rounded-xl bg-pink-600 hover:bg-pink-500 text-white font-orbitron text-xs font-bold flex items-center justify-center gap-2 transition-all shadow-md shadow-pink-600/30">
+                            <i class="fa-solid fa-plus"></i> TAMBAH REKOD
+                        </button>
+                    </div>
+                </div>
+
+                <!-- ADMIN SECTION 1: MLBB DATA TABLE -->
+                <div id="adminMlbbSection" class="space-y-4">
+                    <div class="flex justify-between items-center px-2">
+                        <h3 class="font-orbitron text-base font-bold text-cyan-400">Senarai Pendaftaran MLBB (1 Resit Per Pasukan)</h3>
+                        <span id="mlbbCountBadge" class="text-xs bg-slate-800 text-cyan-300 border border-cyan-800 px-3 py-1 rounded-full"></span>
+                    </div>
+
+                    <div class="glass-panel rounded-2xl overflow-hidden border border-gray-800">
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left text-xs text-gray-300">
+                                <thead class="bg-slate-900/90 text-gray-400 font-orbitron uppercase text-[10px] tracking-wider border-b border-gray-800">
+                                    <tr>
+                                        <th class="p-4">Pasukan</th>
+                                        <th class="p-4">Peranan</th>
+                                        <th class="p-4">Nama Penuh</th>
+                                        <th class="p-4">No. IC</th>
+                                        <th class="p-4">No. Matriks</th>
+                                        <th class="p-4">No. Telefon</th>
+                                        <th class="p-4">Email</th>
+                                        <th class="p-4">Username / ID MLBB</th>
+                                        <th class="p-4 text-center">Bukti Bayaran (1 / Pasukan)</th>
+                                        <th class="p-4 text-center">Tindakan</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="adminMlbbTableBody" class="divide-y divide-gray-800/60 font-medium">
+                                    <!-- Dynamic rows -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ADMIN SECTION 2: eFOOTBALL DATA TABLE -->
+                <div id="adminEfSection" class="hidden space-y-4">
+                    <div class="flex justify-between items-center px-2">
+                        <h3 class="font-orbitron text-base font-bold text-purple-400">Senarai Pendaftaran eFootball (Data Penuh)</h3>
+                        <span id="efCountBadge" class="text-xs bg-slate-800 text-purple-300 border border-purple-800 px-3 py-1 rounded-full"></span>
+                    </div>
+
+                    <div class="glass-panel rounded-2xl overflow-hidden border border-gray-800">
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left text-xs text-gray-300">
+                                <thead class="bg-slate-900/90 text-gray-400 font-orbitron uppercase text-[10px] tracking-wider border-b border-gray-800">
+                                    <tr>
+                                        <th class="p-4">Bil</th>
+                                        <th class="p-4">Nama Penuh</th>
+                                        <th class="p-4">No. IC</th>
+                                        <th class="p-4">No. Matriks</th>
+                                        <th class="p-4">No. Telefon</th>
+                                        <th class="p-4">Email</th>
+                                        <th class="p-4">Username In-Game</th>
+                                        <th class="p-4">ID In-Game</th>
+                                        <th class="p-4 text-center">Bukti Bayaran</th>
+                                        <th class="p-4 text-center">Tindakan</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="adminEfTableBody" class="divide-y divide-gray-800/60 font-medium">
+                                    <!-- Dynamic rows -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Modal Form (Add / Edit Record Admin) -->
+    <div id="recordModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
+        <div class="glass-panel w-full max-w-lg rounded-2xl border border-gray-700 p-6 space-y-5 relative max-h-[90vh] overflow-y-auto">
+            <button onclick="closeModal()" class="absolute top-5 right-5 text-gray-400 hover:text-white">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+
+            <h3 id="modalTitle" class="font-orbitron text-xl font-bold text-white border-b border-gray-800 pb-3">
+                Tambah Peserta
+            </h3>
+
+            <form id="recordForm" onsubmit="saveRecord(event)" class="space-y-4 text-xs">
+                <input type="hidden" id="editIndex" value="-1">
+
+                <div id="fieldCategory" class="space-y-1">
+                    <label class="block text-gray-300 font-semibold uppercase">Kategori Kejohanan</label>
+                    <select id="inputCategory" onchange="toggleCategoryFields()" class="w-full bg-slate-900 border border-slate-700 rounded-xl p-3 text-white focus:outline-none focus:border-pink-500">
+                        <option value="mlbb">Mobile Legends (MLBB)</option>
+                        <option value="efootball">eFootball</option>
+                    </select>
+                </div>
+
+                <div id="mlbbSpecificFields" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-gray-300 font-semibold uppercase mb-1">Nama Pasukan</label>
+                        <input type="text" id="inputTeam" placeholder="Contoh: CIPS WORRIOR" class="w-full bg-slate-900 border border-slate-700 rounded-xl p-3 text-white focus:outline-none focus:border-pink-500">
+                    </div>
+                    <div>
+                        <label class="block text-gray-300 font-semibold uppercase mb-1">Peranan Dalam Pasukan</label>
+                        <select id="inputRole" onchange="toggleCategoryFields()" class="w-full bg-slate-900 border border-slate-700 rounded-xl p-3 text-white focus:outline-none focus:border-pink-500">
+                            <option value="Ketua">Ketua Pasukan</option>
+                            <option value="Ahli">Ahli Pasukan</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="space-y-1">
+                    <label class="block text-gray-300 font-semibold uppercase">Nama Penuh Peserta</label>
+                    <input type="text" id="inputName" required placeholder="Contoh: MUHAMMAD FARISH DANIEL" class="w-full bg-slate-900 border border-slate-700 rounded-xl p-3 text-white focus:outline-none focus:border-pink-500">
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-gray-300 font-semibold uppercase mb-1">No. Kad Pengenalan (IC)</label>
+                        <input type="text" id="inputIc" required placeholder="Contoh: (xxxxxx-xx-xxxx) atau (xxxxxxxxxxxx)" class="w-full bg-slate-900 border border-slate-700 rounded-xl p-3 text-white focus:outline-none focus:border-pink-500">
+                    </div>
+                    <div>
+                        <label class="block text-gray-300 font-semibold uppercase mb-1">No. Matriks</label>
+                        <input type="text" id="inputMatrik" required placeholder="Contoh: A04SPP24F012" class="w-full bg-slate-900 border border-slate-700 rounded-xl p-3 text-white focus:outline-none focus:border-pink-500">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-gray-300 font-semibold uppercase mb-1">No. Telefon</label>
+                        <input type="tel" id="inputPhone" required placeholder="Contoh: 0123456789" class="w-full bg-slate-900 border border-slate-700 rounded-xl p-3 text-white focus:outline-none focus:border-pink-500">
+                    </div>
+                    <div>
+                        <label class="block text-gray-300 font-semibold uppercase mb-1">Alamat E-mel</label>
+                        <input type="email" id="inputEmail" required placeholder="contoh@gmail.com" class="w-full bg-slate-900 border border-slate-700 rounded-xl p-3 text-white focus:outline-none focus:border-pink-500">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-gray-300 font-semibold uppercase mb-1">Username In-Game</label>
+                        <input type="text" id="inputUsername" required placeholder="Contoh: Rishhh" class="w-full bg-slate-900 border border-slate-700 rounded-xl p-3 text-white focus:outline-none focus:border-pink-500">
+                    </div>
+                    <div>
+                        <label class="block text-gray-300 font-semibold uppercase mb-1">ID In-Game</label>
+                        <input type="text" id="inputId" required placeholder="Contoh: 148810239" class="w-full bg-slate-900 border border-slate-700 rounded-xl p-3 text-white focus:outline-none focus:border-pink-500">
+                    </div>
+                </div>
+
+                <!-- Part Resit -->
+                <div id="receiptFieldContainer" class="space-y-1">
+                    <label class="block text-gray-300 font-semibold uppercase">Pautan Bukti Bayaran (URL Resit)</label>
+                    <input type="url" id="inputReceipt" placeholder="https://drive.google.com/..." class="w-full bg-slate-900 border border-slate-700 rounded-xl p-3 text-white focus:outline-none focus:border-pink-500">
+                </div>
+
+                <div class="pt-4 flex justify-end gap-3">
+                    <button type="button" onclick="closeModal()" class="px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-gray-300 font-semibold">
+                        Batal
+                    </button>
+                    <button type="submit" class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-pink-600 to-rose-600 text-white font-orbitron font-bold shadow-md hover:opacity-90 transition-opacity">
+                        Simpan Rekod
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal Edit No. Telefon MLBB (Untuk Ketua Pasukan sahaja) -->
+    <div id="mlbbPhoneModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
+        <div class="glass-panel w-full max-w-lg rounded-2xl border border-cyan-500/40 p-6 space-y-5 relative max-h-[90vh] overflow-y-auto">
+            <button onclick="closeMlbbPhoneModal()" class="absolute top-5 right-5 text-gray-400 hover:text-white">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+
+            <div class="border-b border-gray-800 pb-3">
+                <h3 class="font-orbitron text-xl font-bold text-cyan-400">Kemaskini No. Telefon Pasukan</h3>
+                <p class="text-xs text-gray-400">Sila kemaskini nombor telefon ahli pasukan anda. Maklumat lain adalah terhitung dan tidak boleh diubah.</p>
+            </div>
+
+            <form onsubmit="saveMlbbPhones(event)" class="space-y-4 text-xs">
+                <div id="mlbbPhoneFieldsContainer" class="space-y-3">
+                    <!-- Dynamic Member Phone Inputs -->
+                </div>
+
+                <div class="pt-4 flex justify-end gap-3">
+                    <button type="button" onclick="closeMlbbPhoneModal()" class="px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-gray-300 font-semibold">
+                        Batal
+                    </button>
+                    <button type="submit" class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-orbitron font-bold shadow-md hover:opacity-90 transition-opacity">
+                        Simpan Perubahan
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal Edit No. Telefon eFootball (Untuk Peserta sahaja) -->
+    <div id="efPhoneModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
+        <div class="glass-panel w-full max-w-md rounded-2xl border border-purple-500/40 p-6 space-y-5 relative">
+            <button onclick="closeEfPhoneModal()" class="absolute top-5 right-5 text-gray-400 hover:text-white">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+
+            <div class="border-b border-gray-800 pb-3">
+                <h3 class="font-orbitron text-xl font-bold text-purple-400">Kemaskini No. Telefon Peserta</h3>
+                <p class="text-xs text-gray-400">Sila kemaskini nombor telefon bimbit anda untuk tujuan perhubungan kejohanan.</p>
+            </div>
+
+            <form onsubmit="saveEfPhone(event)" class="space-y-4 text-xs">
+                <div>
+                    <label class="block text-gray-300 font-semibold uppercase mb-1">Nama Peserta</label>
+                    <input type="text" id="efPhoneModalName" readonly class="w-full bg-slate-900/60 border border-slate-800 rounded-xl p-3 text-gray-400 cursor-not-allowed font-semibold">
+                </div>
+
+                <div>
+                    <label class="block text-gray-300 font-semibold uppercase mb-1">No. Telefon Baharu</label>
+                    <input type="tel" id="efPhoneModalInput" required placeholder="Contoh: 0123456789" class="w-full bg-slate-900 border border-slate-700 rounded-xl p-3 text-white focus:outline-none focus:border-purple-500 font-mono">
+                </div>
+
+                <div class="pt-4 flex justify-end gap-3">
+                    <button type="button" onclick="closeEfPhoneModal()" class="px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-gray-300 font-semibold">
+                        Batal
+                    </button>
+                    <button type="submit" class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-purple-600 to-pink-600 text-white font-orbitron font-bold shadow-md hover:opacity-90 transition-opacity">
+                        Simpan Perubahan
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Custom Notification Box -->
+    <div id="toast" class="hidden fixed bottom-6 right-6 z-50 bg-slate-900 border border-cyan-500 text-white text-xs px-5 py-3 rounded-xl shadow-2xl flex items-center gap-3">
+        <i class="fa-solid fa-circle-check text-cyan-400 text-base"></i>
+        <span id="toastMsg">Operasi berjaya!</span>
+    </div>
+
+    <!-- Footer -->
+    <footer class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-12 text-center text-xs text-gray-500 border-t border-gray-900 pt-6 relative z-10">
+        <p>&copy; 2026 PERTANDINGAN MOD MLBB & eFOOTBALL E-SPORTS CHAMPIONSHIP. Hak Cipta Terpelihara.</p>
+    </footer>
+
+    <!-- JavaScript Datasets & Application Logic -->
+    <script>
+        let mlbbData = [];
+        let efootballData = [];
+
+        // Active Logged-in State
+        let currentMlbbTeam = '';
+        let currentEfIc = '';
+        let currentAdminTab = 'mlbb';
+
+        // Load Data from LocalStorage initially
+        window.onload = function() {
+            if (localStorage.getItem('mlbbData_2026')) {
+                mlbbData = JSON.parse(localStorage.getItem('mlbbData_2026'));
+            }
+            if (localStorage.getItem('efootballData_2026')) {
+                efootballData = JSON.parse(localStorage.getItem('efootballData_2026'));
+            }
+            populateMlbbTeamDropdown();
+        };
+
+        function saveDataToStorage() {
+            localStorage.setItem('mlbbData_2026', JSON.stringify(mlbbData));
+            localStorage.setItem('efootballData_2026', JSON.stringify(efootballData));
+            if (typeof window.saveToCloud === 'function') {
+                window.saveToCloud();
+            }
+        }
+
+        // Utility: Format WhatsApp Link
+        function getWaLink(phoneStr) {
+            if (!phoneStr) return '#';
+            let clean = phoneStr.replace(/[^0-9]/g, '');
+            if (clean.startsWith('0')) {
+                clean = '60' + clean.substring(1);
+            }
+            return `https://wa.me/${clean}`;
+        }
+
+        // Utility: Strip non-numeric characters for flexible IC matching
+        function cleanIc(icStr) {
+            return (icStr || '').toString().replace(/[^0-9xX]/g, '').toLowerCase();
+        }
+
+        // Toast Helper
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toastMsg').innerText = message;
+            toast.classList.remove('hidden');
+            setTimeout(() => {
+                toast.classList.add('hidden');
+            }, 3000);
+        }
+
+        // View Navigation
+        function switchRole(role) {
+            logoutParticipant('mlbb');
+            logoutParticipant('efootball');
+
+            document.getElementById('adminAuthBox').classList.remove('hidden');
+            document.getElementById('adminDashboard').classList.add('hidden');
+            document.getElementById('adminPasswordInput').value = '';
+
+            document.getElementById('roleSelectView').classList.add('hidden');
+            document.getElementById('mlbbView').classList.add('hidden');
+            document.getElementById('efootballView').classList.add('hidden');
+            document.getElementById('adminView').classList.add('hidden');
+
+            const badge = document.getElementById('currentRoleBadge');
+            const badgeText = document.getElementById('roleBadgeText');
+            badge.classList.remove('hidden');
+
+            if (role === 'mlbb') {
+                document.getElementById('mlbbView').classList.remove('hidden');
+                badgeText.innerText = "PESERTA MLBB";
+                populateMlbbTeamDropdown();
+            } else if (role === 'efootball') {
+                document.getElementById('efootballView').classList.remove('hidden');
+                badgeText.innerText = "PESERTA eFOOTBALL";
+            } else if (role === 'admin') {
+                document.getElementById('adminView').classList.remove('hidden');
+                badgeText.innerText = "PORTAL ADMIN";
+            } else {
+                document.getElementById('roleSelectView').classList.remove('hidden');
+                badge.classList.add('hidden');
+            }
+        }
+
+        // Populate MLBB Dropdown
+        function populateMlbbTeamDropdown() {
+            const select = document.getElementById('mlbbTeamSelect');
+            if (!select) return;
+            select.innerHTML = '<option value="" disabled selected>-- Pilih Pasukan Anda --</option>';
+            
+            const teams = [...new Set(mlbbData.map(item => item.team))].sort();
+            teams.forEach(teamName => {
+                const opt = document.createElement('option');
+                opt.value = teamName;
+                opt.textContent = teamName;
+                select.appendChild(opt);
+            });
+        }
+
+        // MLBB Verification & Login
+        function handleMlbbLogin(e) {
+            e.preventDefault();
+            const selectedTeam = document.getElementById('mlbbTeamSelect').value;
+            const enteredIc = document.getElementById('mlbbIcInput').value;
+            const errorEl = document.getElementById('mlbbError');
+
+            const teamMembers = mlbbData.filter(m => m.team === selectedTeam);
+            const leader = teamMembers.find(m => m.role === "Ketua") || teamMembers[0];
+
+            if (leader && cleanIc(enteredIc) === cleanIc(leader.ic)) {
+                errorEl.classList.add('hidden');
+                document.getElementById('mlbbAuthCard').classList.add('hidden');
+                currentMlbbTeam = selectedTeam;
+                
+                const teamReceipt = getTeamReceipt(selectedTeam);
+                displayMlbbTeam(selectedTeam, teamMembers, teamReceipt);
+            } else {
+                errorEl.classList.remove('hidden');
+            }
+        }
+
+        // Display MLBB Team Card Grid
+        function displayMlbbTeam(teamName, members, receiptUrl) {
+            document.getElementById('displayMlbbTeamName').innerText = teamName;
+            document.getElementById('teamReceiptBtn').href = receiptUrl || '#';
+
+            const grid = document.getElementById('mlbbMembersGrid');
+            grid.innerHTML = '';
+
+            const sortedMembers = [...members].sort((a, b) => (a.role === 'Ketua' ? -1 : 1));
+
+            sortedMembers.forEach((m, idx) => {
+                const card = document.createElement('div');
+                card.className = "glass-panel rounded-2xl p-5 border border-cyan-500/20 space-y-3 relative overflow-hidden";
+                const phoneDisplay = m.phone ? m.phone : '-';
+                const waUrl = getWaLink(m.phone);
+
+                card.innerHTML = `
+                    <div class="flex justify-between items-center border-b border-gray-800 pb-2">
+                        <span class="text-[10px] font-bold font-orbitron px-2.5 py-1 rounded-md ${m.role === 'Ketua' ? 'bg-cyan-950 text-cyan-300 border border-cyan-800' : 'bg-slate-800 text-gray-400'} uppercase">
+                            ${m.role === 'Ketua' ? '<i class="fa-solid fa-crown text-yellow-400 mr-1"></i> KETUA PASUKAN' : 'AHLI PASUKAN'}
+                        </span>
+                        <span class="text-xs text-gray-500 font-mono">#0${idx + 1}</span>
+                    </div>
+
+                    <div>
+                        <h4 class="font-bold text-white text-base leading-tight">${m.name}</h4>
+                    </div>
+
+                    <div class="space-y-1.5 text-xs">
+                        <div class="flex justify-between">
+                            <span class="text-gray-400">No. IC:</span>
+                            <span class="font-mono text-gray-200">${m.ic}</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-400">No. Matriks:</span>
+                            <span class="text-gray-200">${m.matrik}</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-gray-400">No. Telefon:</span>
+                            <div class="flex items-center gap-1.5">
+                                <span class="font-mono text-green-400 font-semibold">${phoneDisplay}</span>
+                                ${m.phone ? `<a href="${waUrl}" target="_blank" class="text-green-400 hover:text-green-300"><i class="fa-brands fa-whatsapp text-sm"></i></a>` : ''}
+                            </div>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-400">Email:</span>
+                            <span class="text-gray-200 break-all">${m.email}</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-400">Username MLBB:</span>
+                            <span class="text-cyan-300 font-semibold">${m.username}</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-400">ID MLBB:</span>
+                            <span class="font-mono text-gray-200">${m.id}</span>
+                        </div>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+
+            document.getElementById('mlbbTeamDetails').classList.remove('hidden');
+        }
+
+        // Modal Edit Telefon MLBB (Khas Ketua Pasukan)
+        function openMlbbPhoneEditModal() {
+            if (!currentMlbbTeam) return;
+
+            const container = document.getElementById('mlbbPhoneFieldsContainer');
+            container.innerHTML = '';
+
+            const teamMembers = mlbbData.filter(m => m.team === currentMlbbTeam);
+
+            teamMembers.forEach((m, idx) => {
+                const div = document.createElement('div');
+                div.className = "bg-slate-900/80 p-3 rounded-xl border border-slate-800 space-y-2";
+                div.innerHTML = `
+                    <div class="flex justify-between items-center">
+                        <span class="font-semibold text-white">${m.name} (${m.role})</span>
+                        <span class="text-[10px] text-gray-400 font-mono">${m.matrik}</span>
+                    </div>
+                    <div>
+                        <input type="tel" data-ic="${m.ic}" value="${m.phone || ''}" placeholder="No. Telefon (Contoh: 0123456789)" class="mlbb-phone-input w-full bg-slate-950 border border-slate-700 rounded-lg p-2 text-xs text-white focus:outline-none focus:border-cyan-400 font-mono">
+                    </div>
+                `;
+                container.appendChild(div);
+            });
+
+            document.getElementById('mlbbPhoneModal').classList.remove('hidden');
+        }
+
+        function closeMlbbPhoneModal() {
+            document.getElementById('mlbbPhoneModal').classList.add('hidden');
+        }
+
+        function saveMlbbPhones(e) {
+            e.preventDefault();
+            const inputs = document.querySelectorAll('.mlbb-phone-input');
+
+            inputs.forEach(input => {
+                const targetIc = input.getAttribute('data-ic');
+                const newPhone = input.value.trim();
+
+                const member = mlbbData.find(m => cleanIc(m.ic) === cleanIc(targetIc));
+                if (member) {
+                    member.phone = newPhone;
+                }
+            });
+
+            saveDataToStorage();
+            closeMlbbPhoneModal();
+
+            const updatedMembers = mlbbData.filter(m => m.team === currentMlbbTeam);
+            const teamReceipt = getTeamReceipt(currentMlbbTeam);
+            displayMlbbTeam(currentMlbbTeam, updatedMembers, teamReceipt);
+            if (typeof renderAdminTable === 'function') renderAdminTable();
+
+            showToast("No. telefon pasukan berjaya dikemaskini!");
+        }
+
+        // eFootball Verification & Login
+        function handleEfootballLogin(e) {
+            e.preventDefault();
+            const enteredIc = document.getElementById('efootballIcInput').value;
+            const errorEl = document.getElementById('efootballError');
+
+            const player = efootballData.find(p => cleanIc(p.ic) === cleanIc(enteredIc));
+
+            if (player) {
+                errorEl.classList.add('hidden');
+                document.getElementById('efootballAuthCard').classList.add('hidden');
+                currentEfIc = player.ic;
+                displayEfootballPlayer(player);
+            } else {
+                errorEl.classList.remove('hidden');
+            }
+        }
+
+        // Display eFootball Profile
+        function displayEfootballPlayer(p) {
+            document.getElementById('efPlayerName').innerText = p.name;
+            document.getElementById('efPlayerIc').innerText = p.ic;
+            document.getElementById('efPlayerMatrik').innerText = p.matrik;
+            document.getElementById('efPlayerPhone').innerText = p.phone || '-';
+            document.getElementById('efPlayerEmail').innerText = p.email;
+            document.getElementById('efPlayerUsername').innerText = p.username;
+            document.getElementById('efPlayerId').innerText = p.id;
+            document.getElementById('efPlayerReceipt').innerHTML = `
+                <a href="${p.receipt || '#'}" target="_blank" class="inline-flex items-center gap-1.5 text-xs text-purple-400 hover:text-purple-300 font-semibold mt-1">
+                    <i class="fa-solid fa-file-invoice-dollar"></i> Papar Resit Pembayaran
+                </a>
+            `;
+
+            document.getElementById('efootballPlayerDetails').classList.remove('hidden');
+        }
+
+        // Modal Edit Telefon eFootball (Khas Peserta)
+        function openEfPhoneEditModal() {
+            if (!currentEfIc) return;
+
+            const player = efootballData.find(p => cleanIc(p.ic) === cleanIc(currentEfIc));
+            if (!player) return;
+
+            document.getElementById('efPhoneModalName').value = player.name;
+            document.getElementById('efPhoneModalInput').value = player.phone || '';
+
+            document.getElementById('efPhoneModal').classList.remove('hidden');
+        }
+
+        function closeEfPhoneModal() {
+            document.getElementById('efPhoneModal').classList.add('hidden');
+        }
+
+        function saveEfPhone(e) {
+            e.preventDefault();
+            const newPhone = document.getElementById('efPhoneModalInput').value.trim();
+
+            const player = efootballData.find(p => cleanIc(p.ic) === cleanIc(currentEfIc));
+            if (player) {
+                player.phone = newPhone;
+                saveDataToStorage();
+                displayEfootballPlayer(player);
+                if (typeof renderAdminTable === 'function') renderAdminTable();
+                showToast("No. telefon berjaya dikemaskini!");
+            }
+
+            closeEfPhoneModal();
+        }
+
+        // Participant Logout
+        function logoutParticipant(type) {
+            if (type === 'mlbb') {
+                currentMlbbTeam = '';
+                document.getElementById('mlbbTeamDetails').classList.add('hidden');
+                document.getElementById('mlbbAuthCard').classList.remove('hidden');
+                document.getElementById('mlbbAuthForm').reset();
+            } else if (type === 'efootball') {
+                currentEfIc = '';
+                document.getElementById('efootballPlayerDetails').classList.add('hidden');
+                document.getElementById('efootballAuthCard').classList.remove('hidden');
+                document.getElementById('efootballAuthForm').reset();
+            }
+        }
+
+        // Admin Auth
+        function handleAdminLogin(e) {
+            e.preventDefault();
+            const pass = document.getElementById('adminPasswordInput').value.trim();
+            const errorEl = document.getElementById('adminError');
+
+            if (pass.toLowerCase() === 'meow') {
+                errorEl.classList.add('hidden');
+                document.getElementById('adminAuthBox').classList.add('hidden');
+                document.getElementById('adminDashboard').classList.remove('hidden');
+                switchAdminCategory('mlbb');
+            } else {
+                errorEl.classList.remove('hidden');
+            }
+        }
+
+        // Admin Tab Switcher
+        function switchAdminCategory(cat) {
+            currentAdminTab = cat;
+            const tabMlbb = document.getElementById('adminTabMlbb');
+            const tabEf = document.getElementById('adminTabEf');
+
+            const secMlbb = document.getElementById('adminMlbbSection');
+            const secEf = document.getElementById('adminEfSection');
+
+            tabMlbb.className = "px-5 py-2.5 rounded-xl text-xs font-bold font-orbitron bg-slate-800 text-gray-400 hover:text-white transition-all";
+            tabEf.className = "px-5 py-2.5 rounded-xl text-xs font-bold font-orbitron bg-slate-800 text-gray-400 hover:text-white transition-all";
+
+            secMlbb.classList.add('hidden');
+            secEf.classList.add('hidden');
+
+            if (cat === 'mlbb') {
+                tabMlbb.className = "px-5 py-2.5 rounded-xl text-xs font-bold font-orbitron bg-cyan-600 text-white shadow-lg transition-all";
+                secMlbb.classList.remove('hidden');
+            } else if (cat === 'efootball') {
+                tabEf.className = "px-5 py-2.5 rounded-xl text-xs font-bold font-orbitron bg-purple-600 text-white shadow-lg transition-all";
+                secEf.classList.remove('hidden');
+            }
+
+            renderAdminTable();
+        }
+
+        // Helper untuk dapatkan resit pasukan (dikeutamakan resit milik Ketua)
+        function getTeamReceipt(teamName) {
+            const teamLeader = mlbbData.find(m => m.team === teamName && m.role === 'Ketua' && m.receipt);
+            if (teamLeader) return teamLeader.receipt;
+            const anyMember = mlbbData.find(m => m.team === teamName && m.receipt);
+            return anyMember ? anyMember.receipt : '';
+        }
+
+        // Render Admin Data Tables
+        function renderAdminTable() {
+            const query = (document.getElementById('adminSearchInput').value || '').toLowerCase();
+
+            if (currentAdminTab === 'mlbb') {
+                const mappedData = mlbbData.map((item, idx) => ({ ...item, _originalIndex: idx }));
+
+                const filtered = mappedData.filter(item => {
+                    return item.name.toLowerCase().includes(query) ||
+                           (item.team && item.team.toLowerCase().includes(query)) ||
+                           item.ic.toLowerCase().includes(query) ||
+                           item.matrik.toLowerCase().includes(query) ||
+                           (item.phone && item.phone.toLowerCase().includes(query)) ||
+                           item.username.toLowerCase().includes(query);
+                });
+
+                filtered.sort((a, b) => {
+                    const teamA = (a.team || '').toUpperCase();
+                    const teamB = (b.team || '').toUpperCase();
+                    if (teamA < teamB) return -1;
+                    if (teamA > teamB) return 1;
+
+                    if (a.role === 'Ketua' && b.role !== 'Ketua') return -1;
+                    if (a.role !== 'Ketua' && b.role === 'Ketua') return 1;
+                    return 0;
+                });
+
+                document.getElementById('mlbbCountBadge').innerText = `${filtered.length} Peserta Dijumpai`;
+                const tbody = document.getElementById('adminMlbbTableBody');
+                tbody.innerHTML = '';
+
+                let displayedTeamsReceiptMap = {};
+
+                filtered.forEach(m => {
+                    const tr = document.createElement('tr');
+                    tr.className = "hover:bg-slate-900/40 transition-colors border-b border-gray-800/40";
+
+                    let receiptCellHtml = '';
+                    if (!displayedTeamsReceiptMap[m.team]) {
+                        displayedTeamsReceiptMap[m.team] = true;
+                        const teamReceipt = getTeamReceipt(m.team);
+                        receiptCellHtml = `
+                            <a href="${teamReceipt || '#'}" target="_blank" class="px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-cyan-300 border border-cyan-800 text-[10px] inline-flex items-center gap-1 font-semibold">
+                                <i class="fa-solid fa-receipt"></i> Resit ${m.team}
+                            </a>
+                        `;
+                    } else {
+                        receiptCellHtml = `<span class="text-[10px] text-gray-500 italic">(Resit Pasukan Sama)</span>`;
+                    }
+
+                    tr.innerHTML = `
+                        <td class="p-4 font-bold text-cyan-300 font-orbitron">${m.team}</td>
+                        <td class="p-4">
+                            <span class="px-2 py-0.5 rounded text-[10px] font-bold ${m.role === 'Ketua' ? 'bg-amber-950 text-amber-300 border border-amber-800' : 'bg-slate-800 text-gray-400'}">
+                                ${m.role}
+                            </span>
+                        </td>
+                        <td class="p-4 font-semibold text-white">${m.name}</td>
+                        <td class="p-4 font-mono text-gray-300">${m.ic}</td>
+                        <td class="p-4 text-gray-300">${m.matrik}</td>
+                        <td class="p-4 text-green-400 font-mono font-medium">${m.phone || '-'}</td>
+                        <td class="p-4 text-gray-400">${m.email}</td>
+                        <td class="p-4"><span class="text-cyan-400 font-medium">${m.username}</span> (${m.id})</td>
+                        <td class="p-4 text-center">
+                            ${receiptCellHtml}
+                        </td>
+                        <td class="p-4 text-center">
+                            <div class="flex items-center justify-center gap-2">
+                                <button onclick="openEditModal('mlbb', ${m._originalIndex})" class="p-1.5 rounded bg-blue-950 text-blue-400 hover:bg-blue-900 border border-blue-800 text-xs">
+                                    <i class="fa-solid fa-pen-to-square"></i>
+                                </button>
+                                <button onclick="deleteRecord('mlbb', ${m._originalIndex})" class="p-1.5 rounded bg-red-950 text-red-400 hover:bg-red-900 border border-red-800 text-xs">
+                                    <i class="fa-solid fa-trash-can"></i>
+                                </button>
+                            </div>
+                        </td>
+                    `;
+                    tbody.appendChild(tr);
+                });
+            } else if (currentAdminTab === 'efootball') {
+                const mappedData = efootballData.map((item, idx) => ({ ...item, _originalIndex: idx }));
+
+                const filtered = mappedData.filter(item => {
+                    return item.name.toLowerCase().includes(query) ||
+                           item.ic.toLowerCase().includes(query) ||
+                           item.matrik.toLowerCase().includes(query) ||
+                           (item.phone && item.phone.toLowerCase().includes(query)) ||
+                           item.username.toLowerCase().includes(query);
+                });
+
+                document.getElementById('efCountBadge').innerText = `${filtered.length} Peserta Dijumpai`;
+                const tbody = document.getElementById('adminEfTableBody');
+                tbody.innerHTML = '';
+
+                filtered.forEach((p, idx) => {
+                    const tr = document.createElement('tr');
+                    tr.className = "hover:bg-slate-900/40 transition-colors border-b border-gray-800/40";
+                    tr.innerHTML = `
+                        <td class="p-4 font-mono text-gray-500">${idx + 1}</td>
+                        <td class="p-4 font-semibold text-white">${p.name}</td>
+                        <td class="p-4 font-mono text-gray-300">${p.ic}</td>
+                        <td class="p-4 text-gray-300">${p.matrik}</td>
+                        <td class="p-4 text-green-400 font-mono font-medium">${p.phone || '-'}</td>
+                        <td class="p-4 text-gray-400">${p.email}</td>
+                        <td class="p-4 text-purple-300 font-bold">${p.username}</td>
+                        <td class="p-4 font-mono text-gray-300">${p.id}</td>
+                        <td class="p-4 text-center">
+                            <a href="${p.receipt || '#'}" target="_blank" class="px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-purple-300 border border-purple-800 text-[10px] inline-flex items-center gap-1 font-semibold">
+                                <i class="fa-solid fa-receipt"></i> Resit
+                            </a>
+                        </td>
+                        <td class="p-4 text-center">
+                            <div class="flex items-center justify-center gap-2">
+                                <button onclick="openEditModal('efootball', ${p._originalIndex})" class="p-1.5 rounded bg-blue-950 text-blue-400 hover:bg-blue-900 border border-blue-800 text-xs">
+                                    <i class="fa-solid fa-pen-to-square"></i>
+                                </button>
+                                <button onclick="deleteRecord('efootball', ${p._originalIndex})" class="p-1.5 rounded bg-red-950 text-red-400 hover:bg-red-900 border border-red-800 text-xs">
+                                    <i class="fa-solid fa-trash-can"></i>
+                                </button>
+                            </div>
+                        </td>
+                    `;
+                    tbody.appendChild(tr);
+                });
+            }
+        }
+
+        // Modal Management (Add / Edit CRUD Admin)
+        function openAddModal() {
+            document.getElementById('modalTitle').innerText = "Tambah Rekod Baharu";
+            document.getElementById('editIndex').value = "-1";
+            document.getElementById('fieldCategory').style.display = "block";
+            document.getElementById('inputCategory').value = currentAdminTab;
+            document.getElementById('recordForm').reset();
+            toggleCategoryFields();
+            document.getElementById('recordModal').classList.remove('hidden');
+        }
+
+        function openEditModal(cat, index) {
+            document.getElementById('modalTitle').innerText = "Kemaskini Rekod Peserta";
+            document.getElementById('editIndex').value = index;
+            document.getElementById('fieldCategory').style.display = "none";
+            document.getElementById('inputCategory').value = cat;
+
+            const record = cat === 'mlbb' ? mlbbData[index] : efootballData[index];
+
+            if (cat === 'mlbb') {
+                document.getElementById('inputTeam').value = record.team || '';
+                document.getElementById('inputRole').value = record.role || 'Ahli';
+            }
+
+            document.getElementById('inputName').value = record.name || '';
+            document.getElementById('inputIc').value = record.ic || '';
+            document.getElementById('inputMatrik').value = record.matrik || '';
+            document.getElementById('inputPhone').value = record.phone || '';
+            document.getElementById('inputEmail').value = record.email || '';
+            document.getElementById('inputUsername').value = record.username || '';
+            document.getElementById('inputId').value = record.id || '';
+            document.getElementById('inputReceipt').value = record.receipt || '';
+
+            toggleCategoryFields();
+            document.getElementById('recordModal').classList.remove('hidden');
+        }
+
+        function closeModal() {
+            document.getElementById('recordModal').classList.add('hidden');
+        }
+
+        // KAWALAN PAPARAN MEDAN RESIT DALAM MODAL
+        function toggleCategoryFields() {
+            const cat = document.getElementById('inputCategory').value;
+            const role = document.getElementById('inputRole').value;
+            const mlbbFields = document.getElementById('mlbbSpecificFields');
+            const receiptContainer = document.getElementById('receiptFieldContainer');
+            const receiptInput = document.getElementById('inputReceipt');
+
+            if (cat === 'mlbb') {
+                mlbbFields.style.display = "grid";
+                if (role === 'Ketua') {
+                    receiptContainer.style.display = "block";
+                    receiptInput.setAttribute('required', 'true');
+                } else {
+                    receiptContainer.style.display = "none";
+                    receiptInput.removeAttribute('required');
+                }
+            } else {
+                mlbbFields.style.display = "none";
+                receiptContainer.style.display = "block";
+                receiptInput.setAttribute('required', 'true');
+            }
+        }
+
+        // Simpan Rekod (Admin)
+        function saveRecord(e) {
+            e.preventDefault();
+            const cat = document.getElementById('inputCategory').value;
+            const index = parseInt(document.getElementById('editIndex').value);
+
+            const recordData = {
+                name: document.getElementById('inputName').value.trim(),
+                ic: document.getElementById('inputIc').value.trim(),
+                matrik: document.getElementById('inputMatrik').value.trim(),
+                phone: document.getElementById('inputPhone').value.trim(),
+                email: document.getElementById('inputEmail').value.trim(),
+                username: document.getElementById('inputUsername').value.trim(),
+                id: document.getElementById('inputId').value.trim()
+            };
+
+            if (cat === 'mlbb') {
+                const teamName = document.getElementById('inputTeam').value.trim() || 'PASUKAN BAHARU';
+                recordData.team = teamName;
+                recordData.role = document.getElementById('inputRole').value;
+                
+                if (recordData.role === 'Ketua') {
+                    recordData.receipt = document.getElementById('inputReceipt').value.trim();
+                } else {
+                    const existingTeamReceipt = getTeamReceipt(teamName);
+                    if (index >= 0) {
+                        recordData.receipt = existingTeamReceipt || mlbbData[index].receipt || '';
+                    } else {
+                        recordData.receipt = existingTeamReceipt || '';
+                    }
+                }
+
+                if (index >= 0) {
+                    mlbbData[index] = recordData;
+                } else {
+                    mlbbData.push(recordData);
+                }
+
+                if (recordData.role === 'Ketua' && recordData.receipt) {
+                    mlbbData.forEach(member => {
+                        if (member.team === teamName) {
+                            member.receipt = recordData.receipt;
+                        }
+                    });
+                }
+            } else {
+                recordData.receipt = document.getElementById('inputReceipt').value.trim();
+                if (index >= 0) {
+                    efootballData[index] = recordData;
+                } else {
+                    efootballData.push(recordData);
+                }
+            }
+
+            saveDataToStorage();
+            closeModal();
+            renderAdminTable();
+            populateMlbbTeamDropdown();
+            showToast(index >= 0 ? "Rekod berjaya dikemaskini!" : "Rekod baharu berjaya ditambah!");
+        }
+
+        // Delete Record
+        function deleteRecord(cat, index) {
+            const targetName = cat === 'mlbb' ? mlbbData[index].name : efootballData[index].name;
+            if (confirm(`Adakah anda pasti untuk memadam rekod "${targetName}"?`)) {
+                if (cat === 'mlbb') {
+                    mlbbData.splice(index, 1);
+                } else {
+                    efootballData.splice(index, 1);
+                }
+                saveDataToStorage();
+                renderAdminTable();
+                populateMlbbTeamDropdown();
+                showToast("Rekod berjaya dipadam!");
+            }
+        }
+    </script>
+
+    <!-- Firebase Realtime Database Integration -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getDatabase, ref, onValue, set } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+      
+        const firebaseConfig = {
+          apiKey: "AIzaSyDQc6EK1KbKIr2L0c2o2klWSylDe2F0gV8",
+          authDomain: "mod-mlbb-and-efootball-2026.firebaseapp.com",
+          databaseURL: "https://mod-mlbb-and-efootball-2026-default-rtdb.asia-southeast1.firebasedatabase.app",
+          projectId: "mod-mlbb-and-efootball-2026",
+          storageBucket: "mod-mlbb-and-efootball-2026.firebasestorage.app",
+          messagingSenderId: "618046484792",
+          appId: "1:618046484792:web:c82c72dcdf921c710851cd",
+          measurementId: "G-XL43W7TZQ6"
+        };
+      
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+      
+        const mlbbRef = ref(db, 'mlbb_teams');
+        const efootballRef = ref(db, 'efootball_players');
+      
+        // 1. DENGAR KEMAS KINI DARI FIREBASE REALTIME DATABASE SECARA SELAMAT
+        onValue(mlbbRef, (snapshot) => {
+          const data = snapshot.val();
+          if (data && Array.isArray(data) && data.length > 0) {
+            mlbbData = data.map(item => ({ phone: '', ...item }));
+            localStorage.setItem('mlbbData_2026', JSON.stringify(mlbbData));
+            if (typeof populateMlbbTeamDropdown === 'function') populateMlbbTeamDropdown();
+            if (typeof renderAdminTable === 'function') renderAdminTable();
+          }
+        });
+      
+        onValue(efootballRef, (snapshot) => {
+          const data = snapshot.val();
+          if (data && Array.isArray(data) && data.length > 0) {
+            efootballData = data.map(item => ({ phone: '', ...item }));
+            localStorage.setItem('efootballData_2026', JSON.stringify(efootballData));
+            if (typeof renderAdminTable === 'function') renderAdminTable();
+          }
+        });
+      
+        // 2. FUNGSI HANTAR DATA KE FIREBASE CLOUD
+        window.saveToCloud = function() {
+          if (mlbbData.length > 0) {
+            set(mlbbRef, mlbbData);
+          }
+          if (efootballData.length > 0) {
+            set(efootballRef, efootballData);
+          }
+        };
+    </script>
+
+</body>
+</html>
