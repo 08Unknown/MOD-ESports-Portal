@@ -1,7 +1,7 @@
 # 🎮 Portal Rasmi Pertandingan MOD MLBB & EFootball E-Sport Championship 2026
 
 ![Platform](https://img.shields.io/badge/Platform-Web-cyan)
-![Framework](https://img.shields.io/badge/Styling-Tailwind_CSS-blue)
+![Styling](https://img.shields.io/badge/Styling-Tailwind_CSS-blue)
 ![Database](https://img.shields.io/badge/Database-Firebase_Realtime-amber)
 ![Hosting](https://img.shields.io/badge/Hosting-GitHub_Pages-green)
 
