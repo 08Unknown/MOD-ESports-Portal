@@ -999,7 +999,7 @@
             const pass = document.getElementById('adminPasswordInput').value.trim();
             const errorEl = document.getElementById('adminError');
 
-            if (pass.toLowerCase() === 'MOD2026_Admin#Secure') {
+            if (pass === 'MOD2026_Admin#Secure') {
                 errorEl.classList.add('hidden');
                 document.getElementById('adminAuthBox').classList.add('hidden');
                 document.getElementById('adminDashboard').classList.remove('hidden');
