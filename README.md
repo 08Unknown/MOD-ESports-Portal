@@ -11,7 +11,7 @@ Portal web pendaftaran dan semakan rasmi bagi Kejohanan E-Sports Championship 20
 
 ## 🚀 Pautan Rasmi
 
-* 🌐 **Demo Laman Web:** [https://08unknown.github.io/MOD-ESports-Portal/]
+* 🌐 **Demo Laman Web:** https://08unknown.github.io/MOD-ESports-Portal/
 
 ---
 
@@ -35,10 +35,11 @@ Portal web pendaftaran dan semakan rasmi bagi Kejohanan E-Sports Championship 20
 
 ## 👤 Pengarang / Pembangun
 
-* **Nama:** [NUR ANISA SOFIA BINTI MOHD KHAIRI]
+* **Nama:** NUR ANISA SOFIA BINTI MOHD KHAIRI
 * **Institusi:** UNIVERSITI PENDIDIKAN SULTAN IDRIS (UPSI)
 * **Program:** DIPLOMA IN COMPUTER SCIENCE (YEAR 1)
-* **LinkedIn:** [https://www.linkedin.com/in/anisa-sofia-2ab598449?utm_source=share_via&utm_content=profile&utm_medium=member_android]
+* **Persatuan:** TIMBALAN YDP PERSATUAN SAINS KOMPUTER (TYDP PSK)
+* **LinkedIn:** https://www.linkedin.com/in/anisa-sofia-2ab598449?utm_source=share_via&utm_content=profile&utm_medium=member_android
 
 ---
 
