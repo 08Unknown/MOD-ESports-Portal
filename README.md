@@ -1,4 +1,4 @@
-# 🎮 Portal Rasmi Kejohanan E-Sports MOD MLBB & eFootball 2026
+# 🎮 Portal Rasmi Pertandingan MOD MLBB & EFootball E-Sport Championship 2026
 
 ![Platform](https://img.shields.io/badge/Platform-Web-cyan)
 ![Framework](https://img.shields.io/badge/Styling-Tailwind_CSS-blue)
