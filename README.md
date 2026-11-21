@@ -43,4 +43,3 @@ Portal web pendaftaran dan semakan rasmi bagi Kejohanan E-Sports Championship 20
 
 ---
 
-© 2026 PERTANDINGAN MOD MLBB & eFOOTBALL E-SPORTS CHAMPIONSHIP 2026. Hak Cipta Terpelihara.
